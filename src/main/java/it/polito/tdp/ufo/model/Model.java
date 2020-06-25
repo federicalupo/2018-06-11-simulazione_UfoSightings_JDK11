@@ -17,6 +17,7 @@ public class Model {
 	
 	private SightingsDAO dao;
 	private Graph<String, DefaultEdge> grafo;
+	private List<String> migliore;
 	
 	public Model() {
 		dao = new SightingsDAO();
@@ -69,5 +70,43 @@ public class Model {
 		}
 		
 		return raggiungibili;
+	}
+	
+	/**listaMigliore
+	 * parziale in cui metto il primo stato
+	 * 
+	 * metto in parziale lo stato se non è presente
+	 * 
+	 * come seleziono gli stati: tra i successori
+	 * 
+	 * @param stato
+	 */
+	
+	public List<String> cerca(String stato) {
+		List<String> parziale = new ArrayList<>();
+		migliore = new ArrayList<>();
+		
+		parziale.add(stato);
+		
+		ricorsiva(parziale, stato); 
+		
+		return migliore;
+	}
+	
+	private void ricorsiva(List<String> parziale, String stato){
+		
+		if(parziale.size() > this.migliore.size()) {
+			this.migliore = new ArrayList<>(parziale);
+		}
+		
+		for(String s: this.successivi(stato)) {
+			if(!parziale.contains(s)) {
+				parziale.add(s);
+				ricorsiva(parziale, s);
+				parziale.remove(s);
+			}
+		}
+		
+		
 	}
 }

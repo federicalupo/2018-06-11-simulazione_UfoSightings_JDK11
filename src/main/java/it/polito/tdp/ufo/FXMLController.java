@@ -79,6 +79,16 @@ public class FXMLController {
 
     @FXML
     void handleSequenza(ActionEvent event) {
+    	
+    	this.txtResult.clear();
+    	String stato = this.boxStato.getValue();
+    	
+    	this.txtResult.appendText("Percorso trovato: \n");
+    	
+    	for(String s : model.cerca(stato)) {
+    		this.txtResult.appendText(s+"\n");
+    	}
+    	
 
     }
 
